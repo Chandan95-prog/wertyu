@@ -15,7 +15,7 @@ class ListPage extends Component {
     return (
       <Container>
         <Segment>
-        <ContactList contacts={this.props.contacts}/>
+        <ContactList contacts={this.props.contacts} deleteContact={this.props.deleteContact} EditContact = {this.props.EditContact}/>
         </Segment>
       </Container>
     )
@@ -26,15 +26,29 @@ class ListPage extends Component {
 // Make contacts  array available in  props
 function mapStateToProps(state) {
   return {
+       contact: state.contact,
       contacts : state.contacts
   }
 }
 const dispatchToProps = dispatch => {
   return {
+    
+    setContact: contact => {
+      dispatch(bodyActions.setContact(contact))
+    },
+
     Contact: contacts => {
       
       dispatch(bodyActions.Contact(contacts));
     },
+
+    deleteContact: id => {
+      dispatch(bodyActions.deleteContact(id))
+    },
+
+    EditContact: contacts => {
+      dispatch(bodyActions.EditContact(contacts))
+    }
   }
 }
 export default connect(

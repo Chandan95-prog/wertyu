@@ -1,6 +1,10 @@
 import React, { Component } from "react";
-import { Button, Modal, Image, Form } from "semantic-ui-react";
+import { Button, Modal, Image, Form, Segment } from "semantic-ui-react";
+import "./AddContact.css"
+import { connect } from "react-redux";
+import * as bodyActions from "../../redux/actionContact";
 class AddContact extends Component {
+  
   state = {
     open: false,
     firstname: "",
@@ -18,7 +22,7 @@ class AddContact extends Component {
     this.setState({ [name]: value });
   };
 
-  addContact = event => {
+  contactInfo = event => {
     event.preventDefault();
     const newContact = {
       firstname: this.state.firstname,
@@ -37,13 +41,15 @@ class AddContact extends Component {
       return;
     }
 
-    this.setState(prevState => ({
-      phoneBook: prevState.phoneBook.concat(newContact),
-      firstname: "",
-      lastname: "",
-      email: "",
-      phone: ""
-    }));
+    // this.setState(prevState => ({
+    //   phoneBook: prevState.phoneBook.concat(newContact),
+    //   firstname: "",
+    //   lastname: "",
+    //   email: "",
+    //   phone: ""
+    // }));
+
+    this.props.addContact(newContact);
   };
 
   render() {
@@ -59,6 +65,7 @@ class AddContact extends Component {
               size="small"
               src="https://react.semantic-ui.com/images/avatar/large/rachel.png"
             />
+            <Segment className = "myView">
             <Form>
               <Form.Field inline widths='equal'>
                 <label>First name</label>
@@ -99,6 +106,7 @@ class AddContact extends Component {
                 />
               </Form.Field>
             </Form>
+            </Segment>
           </Modal.Content>
           <Modal.Actions>
             <Button color="black" onClick={this.close}>
@@ -109,7 +117,7 @@ class AddContact extends Component {
               icon="checkmark"
               labelPosition="right"
               content="Save"
-              onClick={this.addContact}
+              onClick={this.contactInfo}
             />
           </Modal.Actions>
         </Modal>
@@ -117,4 +125,16 @@ class AddContact extends Component {
     );
   }
 }
-export default AddContact;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    contacts: state.contacts
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addContact: newContact => dispatch(bodyActions.addContact(newContact))
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddContact);

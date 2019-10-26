@@ -1,8 +1,12 @@
 import React from "react";
 import {Card, Segment, Icon, Feed, Button, Header, Image,Grid, Container, List, Label, Divider} from "semantic-ui-react";
-
-
+import "./Contact.css"
+import PropTypes from 'prop-types';
+import EditContact from "./EditContact/EditContact";
 function Contact ({contact, deleteContact}) {
+
+
+
  return(
   <Container>
 {/* <Card>
@@ -49,7 +53,7 @@ function Contact ({contact, deleteContact}) {
     </List.Item>
 </List>  */}
 
-<List >
+<List>
     <List.Item >
       <Image avatar src='/images/avatar/small/rachel.png' />
       <List.Content>
@@ -59,6 +63,8 @@ function Contact ({contact, deleteContact}) {
             <b>{contact.email}</b>
           </a>
           <p><Icon name='phone'/>{contact.phone}</p>
+          <Button className="myButton" circular icon='edit' color='green' onClick = {()=> EditContact(contact)}/>
+          <Button className="myButton" circular icon='trash alternate' color='google plus' onClick={() => deleteContact(contact.id)}/>  
         </List.Description>
         </List.Content>
         </List.Item>
@@ -76,6 +82,12 @@ function Contact ({contact, deleteContact}) {
 
  );
 }
+
 export default Contact;
 
-Contact.propTypes = {}
+
+Contact.propTypes = {
+  contact: PropTypes.object.isRequired
+}
+
+// Contact.Prototype = {};
